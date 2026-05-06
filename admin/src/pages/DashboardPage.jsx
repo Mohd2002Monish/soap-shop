@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { fetchOrders, fetchProducts, fetchCustomers } from "../api/admin.api.js";
 import { TopBar } from "../components/Layout.jsx";
 
-const StatCard = ({ icon, label, value, sub, color }) => (
-  <div className="stat-card">
-    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 10 }}>
-      <div className="stat-icon" style={{ fontSize: 26 }}>{icon}</div>
+const StatCard = ({ icon, label, value, sub, color, delay = 0 }) => (
+  <div className="stat-card" style={{ animationDelay: `${delay}s` }}>
+    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 12 }}>
+      <div className="stat-icon" style={{ fontSize: 28, lineHeight: 1 }}>{icon}</div>
       <div style={{ background: color + "20", color, borderRadius: 8, padding: "3px 8px", fontSize: 11, fontWeight: 700 }}>{sub}</div>
     </div>
-    <div className="stat-value" style={{ fontSize: 26, fontWeight: 800, color: "#1e293b", lineHeight: 1 }}>{value}</div>
-    <div style={{ fontSize: 12, color: "#94a3b8", marginTop: 4 }}>{label}</div>
+    <div className="stat-value" style={{ fontSize: 28, fontWeight: 800, color: "#1e293b", lineHeight: 1, animation: `countUp 0.6s ${0.2 + delay}s ease both`, opacity: 0, animationFillMode: "forwards" }}>{value}</div>
+    <div style={{ fontSize: 12, color: "#94a3b8", marginTop: 5, fontWeight: 500 }}>{label}</div>
   </div>
 );
 
@@ -65,10 +65,10 @@ const DashboardPage = () => {
       <div className="main-content">
         {/* Stats Grid */}
         <div className="stats-grid">
-          <StatCard icon="💰" label="Total Revenue" value={`₹${totalRevenue.toLocaleString("en-IN")}`} sub="All time" color="#22c55e" />
-          <StatCard icon="📦" label="Total Orders" value={orders.length} sub={`${pending} pending`} color="#3b82f6" />
-          <StatCard icon="🧼" label="Products" value={products.length} sub="Active" color="#8b5cf6" />
-          <StatCard icon="👥" label="Customers" value={customers.length} sub="Registered" color="#f59e0b" />
+          <StatCard icon="💰" label="Total Revenue" value={`₹${totalRevenue.toLocaleString("en-IN")}`} sub="All time" color="#22c55e" delay={0.05} />
+          <StatCard icon="📦" label="Total Orders" value={orders.length} sub={`${pending} pending`} color="#3b82f6" delay={0.1} />
+          <StatCard icon="🧼" label="Products" value={products.length} sub="Active" color="#8b5cf6" delay={0.15} />
+          <StatCard icon="👥" label="Customers" value={customers.length} sub="Registered" color="#f59e0b" delay={0.2} />
         </div>
 
         <div className="dashboard-two-col">
@@ -78,7 +78,7 @@ const DashboardPage = () => {
               <span style={{ fontWeight: 700, fontSize: 15 }}>Order Status</span>
             </div>
             <div className="card-body">
-              {["pending","confirmed","processing","shipped","delivered","cancelled"].map(status => {
+              {["pending","confirmed","processing","shipped","delivered","cancelled"].map((status, si) => {
                 const count = orders.filter(o => o.status === status).length;
                 const pct = orders.length ? Math.round((count / orders.length) * 100) : 0;
                 return (
@@ -88,7 +88,15 @@ const DashboardPage = () => {
                       <span style={{ fontSize: 13, color: "#64748b" }}>{count} ({pct}%)</span>
                     </div>
                     <div style={{ background: "#f1f5f9", borderRadius: 6, height: 8, overflow: "hidden" }}>
-                      <div style={{ width: `${pct}%`, height: "100%", background: statusColors[status], borderRadius: 6, transition: "width 0.5s ease" }} />
+                      <div
+                        className="progress-bar-fill"
+                        style={{
+                          width: `${pct}%`, height: "100%",
+                          background: statusColors[status], borderRadius: 6,
+                          transition: "width 0.6s ease",
+                          animationDelay: `${si * 0.08}s`,
+                        }}
+                      />
                     </div>
                   </div>
                 );

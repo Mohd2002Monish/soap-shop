@@ -55,21 +55,28 @@ const ProductDetailPage = () => {
 
   return (
     <Box bg="var(--cream)" minH="100vh">
-      <Container maxW="1100px" py={{ base: 6, md: 10 }} px={{ base: 4, md: 6 }}>
-        <Button as={RouterLink} to="/shop" variant="ghost" mb={4} borderRadius="full" color="gray.400" fontSize="sm" _hover={{ color: "var(--pink-dark)" }}>
+      <Container maxW="1100px" py={{ base: 4, md: 10 }} px={{ base: 3, md: 6 }}>
+        <Button
+          as={RouterLink} to="/shop" variant="ghost" mb={3}
+          borderRadius="full" color="gray.400" fontSize="sm"
+          _hover={{ color: "var(--pink-dark)" }}
+          _active={{ transform: "scale(0.96)" }}
+          px={2}
+        >
           ← Back to Shop
         </Button>
 
-        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={12}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={{ base: 6, md: 12 }}>
           {/* Image Side */}
           <Box>
             <Box
-              borderRadius="30px" overflow="hidden"
+              borderRadius={{ base: "20px", md: "30px" }} overflow="hidden"
               boxShadow="0 20px 60px rgba(232,180,184,0.3)"
               border="1px solid rgba(232,180,184,0.2)"
               position="relative"
+              style={{ animation: "scaleIn 0.6s ease both" }}
             >
-              <Image src={imageUrl} alt={product.name} w="full" h={{ base: "300px", md: "480px" }} objectFit="cover" />
+              <Image src={imageUrl} alt={product.name} w="full" h={{ base: "260px", sm: "320px", md: "480px" }} objectFit="cover" />
               {product.discountPrice && (
                 <Badge position="absolute" top={4} left={4}
                   style={{ background: "linear-gradient(135deg,#E8B4B8,#CDB4DB)" }}
@@ -167,20 +174,24 @@ const ProductDetailPage = () => {
             {/* Quantity + Cart */}
             <Box>
               <Text fontSize="sm" fontWeight="600" mb={3}>Quantity</Text>
-              <Flex gap={4} align="center" wrap={{ base: "wrap", sm: "nowrap" }}>
+              <Flex gap={3} align="center" direction={{ base: "column", sm: "row" }}>
                 <HStack>
                   <Button size="sm" borderRadius="full" bg="rgba(232,180,184,0.15)" border="none"
-                    onClick={() => setQty(q => Math.max(1, q - 1))} _hover={{ bg: "rgba(232,180,184,0.3)" }}>−</Button>
+                    onClick={() => setQty(q => Math.max(1, q - 1))} _hover={{ bg: "rgba(232,180,184,0.3)" }}
+                    _active={{ transform: "scale(0.9)" }} minW="38px" minH="38px">−</Button>
                   <Text fontWeight="700" minW="30px" textAlign="center" fontSize="lg">{qty}</Text>
                   <Button size="sm" borderRadius="full" bg="rgba(232,180,184,0.15)" border="none"
-                    onClick={() => setQty(q => Math.min(product.stock, q + 1))} _hover={{ bg: "rgba(232,180,184,0.3)" }}>+</Button>
+                    onClick={() => setQty(q => Math.min(product.stock, q + 1))} _hover={{ bg: "rgba(232,180,184,0.3)" }}
+                    _active={{ transform: "scale(0.9)" }} minW="38px" minH="38px">+</Button>
                 </HStack>
                 <Button
-                  flex={1} size="lg" borderRadius="full"
+                  w={{ base: "full", sm: "auto" }} flex={{ sm: 1 }} size="lg" borderRadius="full"
                   style={{ background: "linear-gradient(135deg,#E8B4B8,#CDB4DB)", color: "white" }}
                   _hover={{ transform: "translateY(-2px)", boxShadow: "0 12px 35px rgba(232,180,184,0.5)" }}
+                  _active={{ transform: "scale(0.97)" }}
                   transition="all 0.3s ease" fontWeight="700"
                   onClick={addToCartHandler} isDisabled={product.stock === 0}
+                  minH="48px"
                 >
                   {product.stock === 0 ? "Sold Out" : `Add ${qty > 1 ? `${qty}×` : ""} to Cart`}
                 </Button>

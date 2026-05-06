@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -7,9 +8,9 @@ const BottomNav = () => {
   const { userInfo } = useSelector((s) => s.auth);
   const { items } = useSelector((s) => s.cart);
   const cartCount = items.reduce((acc, item) => acc + item.quantity, 0);
+  const [pressedKey, setPressedKey] = useState(null);
 
   const openCart = () => {
-    // Dispatch a custom event that the Navbar listens to
     window.dispatchEvent(new CustomEvent("open-cart"));
   };
 
@@ -28,13 +29,14 @@ const BottomNav = () => {
       left={0}
       right={0}
       zIndex={500}
-      bg="rgba(255,248,242,0.96)"
-      backdropFilter="blur(20px)"
-      style={{ WebkitBackdropFilter: "blur(20px)" }}
+      bg="rgba(255,248,242,0.97)"
+      backdropFilter="blur(24px)"
+      style={{ WebkitBackdropFilter: "blur(24px)" }}
       borderTop="1px solid rgba(232,180,184,0.25)"
-      boxShadow="0 -4px 20px rgba(232,180,184,0.12)"
+      boxShadow="0 -6px 24px rgba(232,180,184,0.14)"
+      pb="env(safe-area-inset-bottom, 0px)"
     >
-      <Flex w="full" justify="space-around" align="center" py={2}>
+      <Flex w="full" justify="space-around" align="center" py="8px">
         {navItems.map((item) => {
           const isActive = item.path && location.pathname === item.path;
           return (
@@ -42,25 +44,51 @@ const BottomNav = () => {
               key={item.label}
               as={item.path ? RouterLink : "div"}
               to={item.path || undefined}
-              onClick={item.onClick}
+              onClick={() => {
+                setPressedKey(item.label);
+                setTimeout(() => setPressedKey(null), 300);
+                item.onClick?.();
+              }}
               display="flex"
               flexDir="column"
               alignItems="center"
-              gap="2px"
+              gap="3px"
               px={4}
-              py="6px"
+              py="8px"
+              minW="60px"
               position="relative"
               cursor="pointer"
-              transition="all 0.2s"
-              _active={{ transform: "scale(0.93)" }}
+              transition="all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)"
+              transform={pressedKey === item.label ? "scale(0.88)" : isActive ? "scale(1.05)" : "scale(1)"}
               style={{ textDecoration: "none", WebkitTapHighlightColor: "transparent" }}
             >
+              {/* Active indicator pill */}
+              {isActive && (
+                <Box
+                  position="absolute"
+                  top="4px"
+                  left="50%"
+                  w="32px"
+                  h="32px"
+                  borderRadius="full"
+                  bg="rgba(232,180,184,0.15)"
+                  style={{
+                    transform: "translateX(-50%)",
+                    animation: "scaleIn 0.3s cubic-bezier(0.34,1.56,0.64,1)",
+                  }}
+                />
+              )}
+
+              {/* Cart badge */}
               {item.badge > 0 && (
                 <Box
                   position="absolute"
-                  top="-4px"
-                  right="6px"
-                  style={{ background: "linear-gradient(135deg,#E8B4B8,#CDB4DB)" }}
+                  top="2px"
+                  right="8px"
+                  style={{
+                    background: "linear-gradient(135deg,#E8B4B8,#CDB4DB)",
+                    animation: "bounceIn 0.4s cubic-bezier(0.34,1.56,0.64,1)",
+                  }}
                   borderRadius="full"
                   minW="16px"
                   h="16px"
@@ -71,15 +99,22 @@ const BottomNav = () => {
                   fontWeight="800"
                   color="white"
                   px="3px"
+                  zIndex={1}
                 >
-                  {item.badge}
+                  {item.badge > 9 ? "9+" : item.badge}
                 </Box>
               )}
+
               <Text
                 fontSize="22px"
                 lineHeight={1}
-                style={{ filter: isActive ? "none" : "grayscale(30%)" }}
-                transition="all 0.2s"
+                position="relative"
+                zIndex={1}
+                style={{
+                  filter: isActive ? "none" : "grayscale(20%)",
+                  transition: "all 0.2s",
+                  display: "block",
+                }}
               >
                 {item.icon}
               </Text>
@@ -87,20 +122,28 @@ const BottomNav = () => {
                 fontSize="10px"
                 fontWeight={isActive ? "700" : "500"}
                 color={isActive ? "var(--pink-dark)" : "gray.400"}
-                transition="color 0.2s"
+                transition="all 0.2s"
                 letterSpacing="0.02em"
+                position="relative"
+                zIndex={1}
               >
                 {item.label}
               </Text>
+
+              {/* Active underline dot */}
               {isActive && (
                 <Box
                   position="absolute"
-                  bottom="-6px"
+                  bottom="-1px"
                   left="50%"
-                  w="20px"
-                  h="3px"
+                  w="4px"
+                  h="4px"
                   borderRadius="full"
-                  style={{ background: "linear-gradient(135deg,#E8B4B8,#CDB4DB)", transform: "translateX(-50%)" }}
+                  style={{
+                    background: "linear-gradient(135deg,#E8B4B8,#CDB4DB)",
+                    transform: "translateX(-50%)",
+                    animation: "scaleIn 0.3s ease",
+                  }}
                 />
               )}
             </Box>

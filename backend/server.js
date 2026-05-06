@@ -50,8 +50,12 @@ app.use("/api/coupons", couponRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/upload", uploadRoutes);
 
+app.get("/", (req, res) => {
+  res.json({ message: "Soap Shop API is running...", status: "ok" });
+});
+
 app.get("/api", (req, res) => {
-  res.send("Soap Shop API is running...");
+  res.json({ message: "Soap Shop API is running...", status: "ok" });
 });
 
 // Error Handling Middleware

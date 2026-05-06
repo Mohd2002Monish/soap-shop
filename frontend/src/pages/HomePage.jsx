@@ -144,62 +144,98 @@ const SoapCard = ({ soap }) => {
 
 // ——— Hero ———
 const Hero = ({ firstImage }) => (
-  <Box position="relative" minH={{ base: "75vh", md: "92vh" }} overflow="hidden" display="flex" alignItems="center">
-    <Box className="blob-decoration" w="600px" h="600px" bg="rgba(232,180,184,0.15)" top="-100px" right="-150px" />
-    <Box className="blob-decoration" w="400px" h="400px" bg="rgba(205,180,219,0.12)" bottom="-50px" left="-100px" style={{ animationDelay: "3s" }} />
+  <Box position="relative" minH={{ base: "auto", md: "92vh" }} overflow="hidden" display="flex" alignItems="center">
+    <Box className="blob-decoration" w={{ base: "280px", md: "600px" }} h={{ base: "280px", md: "600px" }} bg="rgba(232,180,184,0.15)" top="-80px" right="-80px" />
+    <Box className="blob-decoration" w={{ base: "200px", md: "400px" }} h={{ base: "200px", md: "400px" }} bg="rgba(205,180,219,0.12)" bottom="-40px" left="-60px" style={{ animationDelay: "3s" }} />
 
-    <Container maxW="1200px" py={{ base: 10, md: 20 }} position="relative" zIndex={1}>
-      <Flex direction={{ base: "column", lg: "row" }} align="center" gap={{ base: 8, lg: 12 }}>
-        <Box flex={1} animation="fadeUp 0.8s ease forwards">
-          <Text className="section-tag" mb={4}>✨ Pure · Natural · Handcrafted</Text>
+    <Container maxW="1200px" py={{ base: 8, md: 20 }} px={{ base: 4, md: 8 }} position="relative" zIndex={1}>
+      <Flex direction={{ base: "column", lg: "row" }} align="center" gap={{ base: 6, lg: 12 }}>
+        {/* Mobile floating image — shown above text on small screens */}
+        {firstImage && (
+          <Box display={{ base: "flex", lg: "none" }} justifyContent="center" w="full">
+            <Box
+              className="float-small"
+              w={{ base: "180px", sm: "220px" }}
+              h={{ base: "180px", sm: "220px" }}
+              borderRadius="60% 40% 30% 70% / 60% 30% 70% 40%"
+              overflow="hidden"
+              boxShadow="0 16px 50px rgba(232,180,184,0.35)"
+              style={{ animation: "scaleIn 0.7s 0.2s ease both" }}
+            >
+              <Image src={firstImage} w="full" h="full" objectFit="cover" />
+            </Box>
+          </Box>
+        )}
+
+        <Box flex={1} animation="fadeUp 0.8s ease forwards" textAlign={{ base: "center", lg: "left" }}>
+          <Text className="section-tag" mb={3} style={{ animation: "fadeUp 0.6s 0.1s ease both", opacity: 0, animationFillMode: "forwards" }}>✨ Pure · Natural · Handcrafted</Text>
           <Text
             fontFamily="'Playfair Display', serif"
-            fontSize={{ base: "2.5rem", md: "4.5rem" }}
+            fontSize={{ base: "2rem", sm: "2.6rem", md: "4.5rem" }}
             fontWeight="700"
-            lineHeight="1.15"
-            mb={5}
+            lineHeight={{ base: "1.2", md: "1.15" }}
+            mb={4}
+            style={{ animation: "fadeUp 0.7s 0.2s ease both", opacity: 0, animationFillMode: "forwards" }}
           >
             Soaps that actually{" "}
             <Text as="span" display="inline" style={{ background: "linear-gradient(135deg,#E8B4B8,#CDB4DB)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
               love you back
             </Text>
           </Text>
-          <Text fontSize={{ base: "md", md: "lg" }} color="gray.500" mb={8} maxW="480px" lineHeight="1.9">
+          <Text
+            fontSize={{ base: "sm", md: "lg" }}
+            color="gray.500" mb={6}
+            maxW={{ base: "100%", lg: "480px" }}
+            lineHeight="1.9"
+            mx={{ base: "auto", lg: 0 }}
+            style={{ animation: "fadeUp 0.7s 0.35s ease both", opacity: 0, animationFillMode: "forwards" }}
+          >
             Sterling Botanica handcrafts small-batch, plant-powered soaps designed for real skin results.
             No fillers. No shortcuts. Just pure botanical goodness.
           </Text>
-          <Flex gap={3} wrap="wrap">
+          <Flex gap={3} wrap="wrap" justify={{ base: "center", lg: "flex-start" }} style={{ animation: "fadeUp 0.7s 0.5s ease both", opacity: 0, animationFillMode: "forwards" }}>
             <Button
-              as="a" href="#products" size={{ base: "md", md: "lg" }}
+              as="a" href="#products"
+              size={{ base: "md", md: "lg" }}
               style={{ background: "linear-gradient(135deg,#E8B4B8,#CDB4DB)", color: "white", borderRadius: "50px" }}
               _hover={{ transform: "translateY(-2px)", boxShadow: "0 12px 35px rgba(232,180,184,0.5)" }}
-              transition="all 0.3s ease" fontWeight="700" px={{ base: 6, md: 8 }}
+              _active={{ transform: "scale(0.97)" }}
+              transition="all 0.3s ease" fontWeight="700"
+              px={{ base: 6, md: 8 }}
+              minH="44px"
             >
               Shop All Soaps ✨
             </Button>
             <Button
-              as="a" href="#about" size={{ base: "md", md: "lg" }} variant="outline"
+              as="a" href="#about"
+              size={{ base: "md", md: "lg" }} variant="outline"
               borderColor="var(--pink)" color="var(--pink-dark)"
-              borderRadius="50px" px={{ base: 6, md: 8 }}
+              borderRadius="50px" px={{ base: 5, md: 8 }}
               _hover={{ bg: "rgba(232,180,184,0.1)", transform: "translateY(-2px)" }}
+              _active={{ transform: "scale(0.97)" }}
               transition="all 0.3s ease"
+              minH="44px"
             >
               Our Story
             </Button>
           </Flex>
-          <Flex gap={{ base: 6, md: 10 }} mt={10}>
-            {[["6", "Botanical Soaps"], ["100%", "Natural"], ["0", "Harsh Chemicals"]].map(([num, label]) => (
-              <Box key={label}>
-                <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="800" style={{ background: "linear-gradient(135deg,#E8B4B8,#CDB4DB)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{num}</Text>
-                <Text fontSize="xs" color="gray.400" fontWeight="500">{label}</Text>
+          <Flex
+            gap={{ base: 5, md: 10 }}
+            mt={{ base: 7, md: 10 }}
+            justify={{ base: "center", lg: "flex-start" }}
+          >
+            {[["6", "Botanical Soaps"], ["100%", "Natural"], ["0", "Harsh Chemicals"]].map(([num, label], i) => (
+              <Box key={label} className="hero-stat" style={{ animationDelay: `${0.6 + i * 0.15}s` }}>
+                <Text fontSize={{ base: "lg", md: "2xl" }} fontWeight="800" style={{ background: "linear-gradient(135deg,#E8B4B8,#CDB4DB)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{num}</Text>
+                <Text fontSize={{ base: "10px", md: "xs" }} color="gray.400" fontWeight="500">{label}</Text>
               </Box>
             ))}
           </Flex>
         </Box>
 
-        {/* Floating hero image */}
+        {/* Floating hero image — desktop only */}
         {firstImage && (
-          <Box flex={1} display={{ base: "none", lg: "block" }} textAlign="center">
+          <Box flex={1} display={{ base: "none", lg: "block" }} textAlign="center" style={{ animation: "slideInRight 0.9s 0.3s ease both", opacity: 0, animationFillMode: "forwards" }}>
             <Box position="relative" display="inline-block">
               <Box className="float" w="380px" h="380px" borderRadius="60% 40% 30% 70% / 60% 30% 70% 40%" overflow="hidden" boxShadow="0 30px 80px rgba(232,180,184,0.35)" mx="auto">
                 <Image src={firstImage} w="full" h="full" objectFit="cover" />
@@ -229,23 +265,28 @@ const Ticker = () => {
 
 // ——— Benefits ———
 const BenefitsSection = () => (
-  <Box id="benefits" py={20} bg="white">
-    <Container maxW="1200px">
-      <VStack mb={14} spacing={3} textAlign="center">
+  <Box id="benefits" py={{ base: 14, md: 20 }} bg="white">
+    <Container maxW="1200px" px={{ base: 4, md: 8 }}>
+      <VStack mb={{ base: 10, md: 14 }} spacing={3} textAlign="center">
         <Text className="section-tag">Why Sterling Botanica</Text>
-        <Text fontFamily="'Playfair Display', serif" fontSize={{ base: "2xl", md: "4xl" }} fontWeight="700">
+        <Text fontFamily="'Playfair Display', serif" fontSize={{ base: "xl", md: "4xl" }} fontWeight="700">
           Not your average soap brand 💅
         </Text>
       </VStack>
-      <SimpleGrid columns={{ base: 2, md: 3 }} spacing={6}>
+      <SimpleGrid columns={{ base: 2, md: 3 }} spacing={{ base: 3, md: 6 }}>
         {benefits.map((b, i) => (
-          <Box key={i} p={6} borderRadius="24px" border="1px solid rgba(232,180,184,0.15)"
-            _hover={{ transform: "translateY(-4px)", boxShadow: "0 12px 30px rgba(232,180,184,0.2)", borderColor: "rgba(232,180,184,0.4)" }}
-            transition="all 0.3s ease" textAlign="center"
+          <Box
+            key={i}
+            className="benefit-card"
+            p={{ base: 4, md: 6 }}
+            borderRadius={{ base: "16px", md: "24px" }}
+            border="1px solid rgba(232,180,184,0.15)"
+            _hover={{ transform: "translateY(-5px) scale(1.02)", boxShadow: "0 14px 32px rgba(232,180,184,0.22)", borderColor: "rgba(232,180,184,0.4)" }}
+            transition="all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275)" textAlign="center"
           >
-            <Text fontSize="3xl" mb={3}>{b.icon}</Text>
-            <Text fontWeight="700" mb={2} fontSize="sm">{b.title}</Text>
-            <Text fontSize="xs" color="gray.400" lineHeight="1.7">{b.desc}</Text>
+            <Text fontSize={{ base: "2xl", md: "3xl" }} mb={2} style={{ display: "block", animation: `wiggle 3s ${i * 0.4}s ease-in-out infinite` }}>{b.icon}</Text>
+            <Text fontWeight="700" mb={1} fontSize={{ base: "xs", md: "sm" }}>{b.title}</Text>
+            <Text fontSize={{ base: "10px", md: "xs" }} color="gray.400" lineHeight="1.7" display={{ base: "none", sm: "block" }}>{b.desc}</Text>
           </Box>
         ))}
       </SimpleGrid>
@@ -355,14 +396,14 @@ const HomePage = () => {
       <Ticker />
 
       {/* Products */}
-      <Box id="products" py={20}>
-        <Container maxW="1200px">
-          <VStack mb={12} spacing={3} textAlign="center">
+      <Box id="products" py={{ base: 12, md: 20 }}>
+        <Container maxW="1200px" px={{ base: 3, md: 8 }}>
+          <VStack mb={{ base: 8, md: 12 }} spacing={3} textAlign="center">
             <Text className="section-tag">Our Collection</Text>
-            <Text fontFamily="'Playfair Display', serif" fontSize={{ base: "2xl", md: "4xl" }} fontWeight="700">
+            <Text fontFamily="'Playfair Display', serif" fontSize={{ base: "xl", md: "4xl" }} fontWeight="700">
               Six soaps. Six skin stories. 🌸
             </Text>
-            <Text color="gray.400" maxW="500px" fontSize="sm">
+            <Text color="gray.400" maxW="500px" fontSize={{ base: "xs", md: "sm" }}>
               Each bar is designed around one specific skin need — find yours.
             </Text>
           </VStack>
@@ -372,7 +413,7 @@ const HomePage = () => {
           ) : soaps.length === 0 ? (
             <Center py={10}><Text color="gray.400">No products found. Check back soon!</Text></Center>
           ) : (
-            <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} spacing={6}>
+            <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} spacing={{ base: 4, md: 6 }}>
               {soaps.map(soap => <SoapCard key={soap._id} soap={soap} />)}
             </SimpleGrid>
           )}

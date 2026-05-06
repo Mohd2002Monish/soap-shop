@@ -33,7 +33,7 @@ body {
 
 /* ——— Scrollbar ——— */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 ::-webkit-scrollbar-track {
   background: var(--cream);
@@ -43,10 +43,17 @@ body {
   border-radius: 10px;
 }
 
-/* ——— Animations ——— */
+/* ——————————————————————————
+   ANIMATIONS
+—————————————————————————— */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-12px); }
+}
+
+@keyframes floatSmall {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
 }
 
 @keyframes shimmer {
@@ -64,14 +71,39 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeUpStagger {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes slideInLeft {
   from { opacity: 0; transform: translateX(-40px); }
   to { opacity: 1; transform: translateX(0); }
 }
 
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes pulse-soft {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.03); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(232, 180, 184, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(232, 180, 184, 0); }
 }
 
 @keyframes rotate-slow {
@@ -85,17 +117,80 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* ——— Utility Classes ——— */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bounceIn {
+  0% { opacity: 0; transform: scale(0.7); }
+  60% { opacity: 1; transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.1); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.08); }
+  70% { transform: scale(1); }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+@keyframes shimmerCard {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ——— Utility Animation Classes ——— */
 .fade-up {
   animation: fadeUp 0.7s ease forwards;
 }
+
+.fade-up-delay-1 { animation: fadeUp 0.7s 0.1s ease both; }
+.fade-up-delay-2 { animation: fadeUp 0.7s 0.2s ease both; }
+.fade-up-delay-3 { animation: fadeUp 0.7s 0.3s ease both; }
+.fade-up-delay-4 { animation: fadeUp 0.7s 0.4s ease both; }
+.fade-up-delay-5 { animation: fadeUp 0.7s 0.5s ease both; }
 
 .float {
   animation: float 4s ease-in-out infinite;
 }
 
+.float-small {
+  animation: floatSmall 3s ease-in-out infinite;
+}
+
 .blob {
   animation: blob 8s ease-in-out infinite;
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.scale-in {
+  animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 .gradient-text {
@@ -118,7 +213,7 @@ body {
 
 /* ——— Navbar ——— */
 .navbar {
-  background: rgba(255, 248, 242, 0.85);
+  background: rgba(255, 248, 242, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(232, 180, 184, 0.2);
@@ -126,6 +221,11 @@ body {
   top: 0;
   z-index: 1000;
   transition: all 0.3s ease;
+}
+
+.navbar-scrolled {
+  background: rgba(255, 248, 242, 0.97);
+  box-shadow: 0 4px 30px rgba(232, 180, 184, 0.15);
 }
 
 /* ——— Cards ——— */
@@ -136,21 +236,30 @@ body {
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   border: 1px solid rgba(232, 180, 184, 0.15);
   position: relative;
+  animation: fadeUpStagger 0.6s ease both;
 }
 
 .soap-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-8px) scale(1.01);
   box-shadow: var(--shadow-pink);
   border-color: rgba(232, 180, 184, 0.4);
 }
 
 .soap-card img {
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .soap-card:hover img {
-  transform: scale(1.05);
+  transform: scale(1.07);
 }
+
+/* Card stagger delays */
+.soap-card:nth-child(1) { animation-delay: 0.05s; }
+.soap-card:nth-child(2) { animation-delay: 0.12s; }
+.soap-card:nth-child(3) { animation-delay: 0.18s; }
+.soap-card:nth-child(4) { animation-delay: 0.24s; }
+.soap-card:nth-child(5) { animation-delay: 0.30s; }
+.soap-card:nth-child(6) { animation-delay: 0.36s; }
 
 /* ——— Buttons ——— */
 .btn-gradient {
@@ -163,14 +272,33 @@ body {
   font-family: 'Inter', sans-serif;
   letter-spacing: 0.05em;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: var(--shadow-pink);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gradient::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
 .btn-gradient:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 35px rgba(232, 180, 184, 0.5);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 40px rgba(232, 180, 184, 0.55);
   background: var(--gradient-hover);
+}
+
+.btn-gradient:hover::after {
+  opacity: 1;
+}
+
+.btn-gradient:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .btn-outline-pink {
@@ -188,6 +316,7 @@ body {
   background: var(--pink);
   color: white;
   transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(232, 180, 184, 0.35);
 }
 
 /* ——— Cart Count Badge ——— */
@@ -205,6 +334,7 @@ body {
   position: absolute;
   top: -8px;
   right: -8px;
+  animation: bounceIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ——— Section Headings ——— */
@@ -239,11 +369,12 @@ body {
   background: white;
   border-radius: 20px;
   border: 1px solid rgba(205, 180, 219, 0.2);
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: fadeUpStagger 0.6s ease both;
 }
 
 .testimonial-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px) rotate(0.5deg);
   box-shadow: var(--shadow-lavender);
   border-color: rgba(205, 180, 219, 0.5);
 }
@@ -258,12 +389,7 @@ body {
 .ticker {
   display: flex;
   width: max-content;
-  animation: ticker 20s linear infinite;
-}
-
-@keyframes ticker {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  animation: ticker 22s linear infinite;
 }
 
 .ticker-item {
@@ -305,13 +431,81 @@ body {
   transition: opacity 400ms ease, transform 400ms ease;
 }
 
-/* ——— MOBILE RESPONSIVE (≤ 768px) ——— */
+/* ——— Loading Skeleton ——— */
+.skeleton {
+  background: linear-gradient(90deg, #f0ede9 25%, #f8f5f2 50%, #f0ede9 75%);
+  background-size: 400px 100%;
+  animation: shimmerCard 1.2s ease infinite;
+  border-radius: 12px;
+}
+
+/* ——— Ripple Effect ——— */
+.ripple-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-btn::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+  top: 50%;
+  left: 50%;
+}
+
+.ripple-btn:active::before {
+  width: 200px;
+  height: 200px;
+  opacity: 1;
+  transition: 0s;
+}
+
+/* ——— Benefit card entrance ——— */
+.benefit-card {
+  opacity: 0;
+  animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.benefit-card:nth-child(1) { animation-delay: 0.0s; }
+.benefit-card:nth-child(2) { animation-delay: 0.1s; }
+.benefit-card:nth-child(3) { animation-delay: 0.2s; }
+.benefit-card:nth-child(4) { animation-delay: 0.3s; }
+.benefit-card:nth-child(5) { animation-delay: 0.4s; }
+.benefit-card:nth-child(6) { animation-delay: 0.5s; }
+
+/* ——— Hero Stat Numbers ——— */
+.hero-stat {
+  animation: countUp 0.8s ease both;
+}
+.hero-stat:nth-child(1) { animation-delay: 0.6s; }
+.hero-stat:nth-child(2) { animation-delay: 0.75s; }
+.hero-stat:nth-child(3) { animation-delay: 0.9s; }
+
+/* ——— TABLET (≤ 1024px) ——— */
+@media (max-width: 1024px) {
+  .soap-card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+/* ——— MOBILE (≤ 768px) ——— */
 @media (max-width: 768px) {
   /* Hero section */
   .hero-section {
-    min-height: 75vh !important;
-    padding-top: 60px !important;
-    padding-bottom: 40px !important;
+    min-height: 72vh !important;
+    padding-top: 50px !important;
+    padding-bottom: 30px !important;
+  }
+
+  /* Reduce hover lift on mobile (no real hover) */
+  .soap-card:hover {
+    transform: none;
+    box-shadow: none;
   }
 
   /* Cart badge positioning */
@@ -325,13 +519,13 @@ body {
 
   /* Ticker items */
   .ticker-item {
-    padding: 0 24px;
+    padding: 0 22px;
     font-size: 12px;
   }
 
-  /* Soap cards — full width on very small */
+  /* Soap cards */
   .soap-card {
-    border-radius: 16px;
+    border-radius: 18px;
   }
 
   /* Testimonial cards */
@@ -339,30 +533,47 @@ body {
     border-radius: 16px;
   }
 
-  /* Detail tabs — make them scrollable */
+  /* Detail tabs — scrollable */
   .detail-tabs-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-}
 
-/* ——— SMALL MOBILE (≤ 480px) ——— */
-@media (max-width: 480px) {
-  /* Tighten section padding */
+  /* Section padding */
   .section-padding {
-    padding-top: 60px !important;
-    padding-bottom: 60px !important;
+    padding-top: 50px !important;
+    padding-bottom: 50px !important;
   }
 
-  /* Blob decorations — hide on tiny screens */
+  /* Float animation reduced on mobile */
+  .float {
+    animation: floatSmall 3s ease-in-out infinite;
+  }
+}
+
+/* ——— S23 / SMALL MOBILE (≤ 400px) ——— */
+@media (max-width: 400px) {
+  /* Tighten section padding */
+  .section-padding {
+    padding-top: 44px !important;
+    padding-bottom: 44px !important;
+  }
+
+  /* Blob decorations — hide on tiny screens for perf */
   .blob-decoration {
     display: none;
   }
 
-  /* Buttons full width helpers */
+  /* Float disabled on tiny screens */
+  .float, .float-small {
+    animation: none;
+  }
+
+  /* Buttons — comfortable tap targets */
   .btn-gradient {
-    padding: 12px 24px;
+    padding: 13px 22px;
     font-size: 14px;
+    min-height: 48px;
   }
 
   /* Cart badge */
@@ -370,17 +581,36 @@ body {
     width: 16px;
     height: 16px;
     font-size: 9px;
+    top: -5px;
+    right: -5px;
   }
 
   /* Section heading */
   .section-tag {
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 0.1em;
   }
 
   /* Ticker */
   .ticker-item {
-    padding: 0 16px;
+    padding: 0 14px;
     font-size: 11px;
+  }
+
+  /* Card border radius smaller */
+  .soap-card {
+    border-radius: 14px;
+  }
+
+  /* Stars smaller */
+  .stars {
+    letter-spacing: 1px;
+  }
+}
+
+/* ——— LANDSCAPE PHONE (≤ 768px height) ——— */
+@media (max-height: 668px) and (max-width: 768px) {
+  .hero-section {
+    min-height: 60vh !important;
   }
 }

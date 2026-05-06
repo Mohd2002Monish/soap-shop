@@ -48,10 +48,16 @@ const ProfilePage = () => {
   };
 
   return (
-    <Box bg="var(--cream)" minH="100vh" py={10}>
-      <Container maxW="1100px">
+    <Box bg="var(--cream)" minH="100vh" py={{ base: 5, md: 10 }}>
+      <Container maxW="1100px" px={{ base: 3, md: 6 }}>
         {/* Profile Header */}
-        <Flex align="center" gap={4} mb={8} p={5} bg="white" borderRadius="24px" border="1px solid rgba(232,180,184,0.2)" shadow="sm" wrap="wrap">
+        <Flex
+          align="center" gap={3} mb={{ base: 5, md: 8 }}
+          p={{ base: 4, md: 5 }} bg="white"
+          borderRadius={{ base: "18px", md: "24px" }}
+          border="1px solid rgba(232,180,184,0.2)" shadow="sm" wrap="wrap"
+          style={{ animation: "fadeUp 0.5s ease both" }}
+        >
           <Avatar
             size={{ base: "lg", md: "xl" }} name={userInfo?.name}
             style={{ background: "linear-gradient(135deg,#E8B4B8,#CDB4DB)" }}
@@ -68,7 +74,12 @@ const ProfilePage = () => {
         </Flex>
 
         <Tabs variant="unstyled" colorScheme="pink">
-          <TabList mb={6} bg="white" borderRadius="16px" p={2} border="1px solid rgba(232,180,184,0.15)" gap={2}>
+          <TabList
+            mb={{ base: 4, md: 6 }}
+            bg="white" borderRadius="16px" p={2}
+            border="1px solid rgba(232,180,184,0.15)" gap={2}
+            style={{ animation: "fadeUp 0.5s 0.1s ease both", opacity: 0, animationFillMode: "forwards" }}
+          >
             {["My Profile", "Order History"].map(label => (
               <Tab
                 key={label}
@@ -93,7 +104,13 @@ const ProfilePage = () => {
           <TabPanels>
             {/* Profile Tab */}
             <TabPanel p={0}>
-              <Box maxW={{ base: "full", md: "500px" }} bg="white" borderRadius="24px" p={{ base: 5, md: 8 }} border="1px solid rgba(232,180,184,0.2)" shadow="sm">
+              <Box
+                maxW={{ base: "full", md: "500px" }} bg="white"
+                borderRadius={{ base: "18px", md: "24px" }}
+                p={{ base: 4, md: 8 }}
+                border="1px solid rgba(232,180,184,0.2)" shadow="sm"
+                style={{ animation: "scaleIn 0.4s ease both" }}
+              >
                 <Text fontFamily="'Playfair Display', serif" fontSize="xl" fontWeight="700" mb={6}>Update Your Details</Text>
                 <form onSubmit={handleSubmit}>
                   <VStack spacing={4}>

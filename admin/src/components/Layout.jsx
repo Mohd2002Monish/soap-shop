@@ -49,12 +49,13 @@ const Sidebar = ({ open, onClose }) => {
 
         {/* Navigation */}
         <nav className="sidebar-nav">
-          {navItems.map((item) => (
+          {navItems.map((item, i) => (
             <NavLink
               key={item.path}
               to={item.path}
               end={item.path === "/"}
               className={({ isActive }) => `nav-item${isActive ? " active" : ""}`}
+              style={{ animationDelay: `${0.05 + i * 0.07}s`, animation: "slideInLeft 0.35s ease both", opacity: 0, animationFillMode: "forwards" }}
             >
               <span className="nav-icon">{item.icon}</span>
               {item.label}
@@ -63,16 +64,21 @@ const Sidebar = ({ open, onClose }) => {
         </nav>
 
         {/* User / Logout */}
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: 16, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: 14, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
           <div style={{ marginBottom: 10 }}>
-            <div style={{ color: "rgba(255,255,255,0.85)", fontSize: 13, fontWeight: 600 }}>{adminInfo?.name}</div>
+            <div style={{ color: "rgba(255,255,255,0.85)", fontSize: 13, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{adminInfo?.name}</div>
             <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 11, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{adminInfo?.email}</div>
           </div>
           <button
             onClick={handleLogout}
-            style={{ background: "rgba(239,68,68,0.15)", color: "#fca5a5", border: "none", padding: "7px 14px", borderRadius: 8, cursor: "pointer", fontSize: 13, fontWeight: 600, width: "100%", transition: "all 0.2s" }}
-            onMouseOver={e => e.target.style.background = "rgba(239,68,68,0.25)"}
-            onMouseOut={e => e.target.style.background = "rgba(239,68,68,0.15)"}
+            style={{
+              background: "rgba(239,68,68,0.12)", color: "#fca5a5", border: "1px solid rgba(239,68,68,0.2)",
+              padding: "8px 14px", borderRadius: 9, cursor: "pointer", fontSize: 13,
+              fontWeight: 600, width: "100%",
+              transition: "all 0.2s",
+            }}
+            onMouseOver={e => { e.target.style.background = "rgba(239,68,68,0.25)"; e.target.style.transform = "translateY(-1px)"; }}
+            onMouseOut={e => { e.target.style.background = "rgba(239,68,68,0.12)"; e.target.style.transform = "translateY(0)"; }}
           >
             Sign Out
           </button>

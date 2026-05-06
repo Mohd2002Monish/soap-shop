@@ -47,10 +47,10 @@ const OrdersPage = () => {
       <TopBar title="Orders" />
       <div className="main-content">
         {/* Filters */}
-        <div className="card" style={{ marginBottom: 20 }}>
+        <div className="card" style={{ marginBottom: 16 }}>
           <div className="card-body">
-            <div className="filters-bar" style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
-              <form onSubmit={handleSearch} style={{ display: "flex", gap: 8, flex: 1, minWidth: 200 }}>
+            <div style={{ display: "flex", gap: 10, alignItems: "stretch", flexWrap: "wrap", flexDirection: "column" }}>
+              <form onSubmit={handleSearch} style={{ display: "flex", gap: 8 }}>
                 <input
                   className="form-input"
                   style={{ flex: 1 }}
@@ -58,11 +58,11 @@ const OrdersPage = () => {
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                 />
-                <button type="submit" className="btn-primary">Search</button>
+                <button type="submit" className="btn-primary" style={{ flexShrink: 0 }}>Search</button>
               </form>
               <select
                 className="form-select"
-                style={{ width: 160, flexShrink: 0 }}
+                style={{ width: "100%" }}
                 value={statusFilter}
                 onChange={e => { setStatusFilter(e.target.value); setPage(1); }}
               >
@@ -124,7 +124,7 @@ const OrdersPage = () => {
                         <td>
                           <select
                             className="form-select"
-                            style={{ width: 120, padding: "5px 8px", fontSize: 12 }}
+                            style={{ width: 108, padding: "4px 6px", fontSize: 11, minHeight: 32 }}
                             value={order.status}
                             onChange={e => handleStatusChange(order._id, e.target.value)}
                           >

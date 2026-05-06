@@ -102,14 +102,20 @@ const CheckoutPage = () => {
   }
 
   return (
-    <Box bg="var(--cream)" minH="100vh" py={{ base: 6, md: 12 }}>
-      <Container maxW="1100px" px={{ base: 4, md: 6 }}>
-        <Text fontFamily="'Playfair Display', serif" fontSize={{ base: "2xl", md: "3xl" }} fontWeight="700" mb={{ base: 5, md: 8 }}>
+    <Box bg="var(--cream)" minH="100vh" py={{ base: 4, md: 12 }}>
+      <Container maxW="1100px" px={{ base: 3, md: 6 }}>
+        <Text
+          fontFamily="'Playfair Display', serif"
+          fontSize={{ base: "xl", md: "3xl" }}
+          fontWeight="700"
+          mb={{ base: 4, md: 8 }}
+          style={{ animation: "fadeUp 0.5s ease both" }}
+        >
           Checkout 🛍️
         </Text>
 
         <form onSubmit={submitHandler}>
-          <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 5, lg: 8 }}>
+          <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 4, lg: 8 }}>
             {/* LEFT — Details Form */}
             <VStack spacing={6} align="stretch">
               {/* Guest notice */}
@@ -137,8 +143,8 @@ const CheckoutPage = () => {
                 </Box>
               )}
 
-              <Box bg="white" borderRadius="20px" p={6} border="1px solid rgba(232,180,184,0.2)">
-                <Text fontFamily="'Playfair Display', serif" fontSize="xl" fontWeight="700" mb={5}>
+              <Box bg="white" borderRadius={{ base: "16px", md: "20px" }} p={{ base: 4, md: 6 }} border="1px solid rgba(232,180,184,0.2)" style={{ animation: "fadeUp 0.5s 0.1s ease both", opacity: 0, animationFillMode: "forwards" }}>
+                <Text fontFamily="'Playfair Display', serif" fontSize={{ base: "lg", md: "xl" }} fontWeight="700" mb={4}>
                   Delivery Details
                 </Text>
                 <VStack spacing={4}>
@@ -241,13 +247,17 @@ const CheckoutPage = () => {
               </Box>
 
               {/* Payment Method (disabled) */}
-              <Box bg="rgba(205,180,219,0.1)" border="1px solid rgba(205,180,219,0.3)" borderRadius="16px" p={4}>
+              <Box
+                bg="rgba(205,180,219,0.1)" border="1px solid rgba(205,180,219,0.3)"
+                borderRadius="16px" p={4}
+                style={{ animation: "fadeUp 0.5s 0.25s ease both", opacity: 0, animationFillMode: "forwards" }}
+              >
                 <Flex align="center" justify="space-between">
                   <Box>
                     <Text fontWeight="700" fontSize="sm">💰 Cash on Delivery</Text>
                     <Text fontSize="xs" color="gray.400" mt={1}>Pay when your order arrives at your door</Text>
                   </Box>
-                  <Badge bg="linear-gradient(135deg,#E8B4B8,#CDB4DB)" color="white" borderRadius="full" px={3} py={1} fontSize="xs">
+                  <Badge style={{ background: "linear-gradient(135deg,#E8B4B8,#CDB4DB)" }} color="white" borderRadius="full" px={3} py={1} fontSize="xs">
                     Selected
                   </Badge>
                 </Flex>
@@ -256,7 +266,15 @@ const CheckoutPage = () => {
 
             {/* RIGHT — Order Summary */}
             <Box>
-              <Box bg="white" borderRadius={{ base: "16px", md: "20px" }} p={{ base: 5, md: 6 }} border="1px solid rgba(232,180,184,0.2)" position={{ base: "static", lg: "sticky" }} top={{ lg: "100px" }}>
+              <Box
+                bg="white"
+                borderRadius={{ base: "16px", md: "20px" }}
+                p={{ base: 4, md: 6 }}
+                border="1px solid rgba(232,180,184,0.2)"
+                position={{ base: "static", lg: "sticky" }}
+                top={{ lg: "100px" }}
+                style={{ animation: "fadeUp 0.5s 0.15s ease both", opacity: 0, animationFillMode: "forwards" }}
+              >
                 <Text fontFamily="'Playfair Display', serif" fontSize="xl" fontWeight="700" mb={5}>
                   Order Summary
                 </Text>
@@ -302,8 +320,11 @@ const CheckoutPage = () => {
                   borderRadius="full"
                   style={{ background: "linear-gradient(135deg,#E8B4B8,#CDB4DB)", color: "white" }}
                   _hover={{ transform: "translateY(-2px)", boxShadow: "0 12px 35px rgba(232,180,184,0.5)" }}
+                  _active={{ transform: "scale(0.97)" }}
                   transition="all 0.3s ease"
                   fontWeight="700"
+                  fontSize={{ base: "md", md: "md" }}
+                  minH="52px"
                   isLoading={isPending}
                   loadingText="Placing Order..."
                 >

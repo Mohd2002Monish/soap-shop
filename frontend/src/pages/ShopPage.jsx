@@ -48,28 +48,28 @@ const ShopPage = () => {
   return (
     <Box bg="var(--cream)" minH="100vh">
       {/* Header */}
-      <Box py={16} textAlign="center" position="relative" overflow="hidden">
+      <Box py={{ base: 10, md: 16 }} textAlign="center" position="relative" overflow="hidden">
         <Box className="blob-decoration" w="400px" h="400px" bg="rgba(232,180,184,0.12)" top="-100px" right="-80px" />
         <Box className="blob-decoration" w="300px" h="300px" bg="rgba(205,180,219,0.1)" bottom="-50px" left="-50px" style={{ animationDelay: "4s" }} />
-        <Container maxW="700px" position="relative" zIndex={1}>
+        <Container maxW="700px" position="relative" zIndex={1} px={{ base: 4, md: 6 }}>
           <Text className="section-tag" mb={3}>Our Collection</Text>
-          <Text fontFamily="'Playfair Display', serif" fontSize={{ base: "3xl", md: "5xl" }} fontWeight="700" mb={4}>
+          <Text fontFamily="'Playfair Display', serif" fontSize={{ base: "2xl", sm: "3xl", md: "5xl" }} fontWeight="700" mb={3}>
             All{" "}
             <Text as="span" style={{ background: "linear-gradient(135deg,#E8B4B8,#CDB4DB)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
               6 Soaps
             </Text>
           </Text>
-          <Text color="gray.400" fontSize="sm">Each bar designed around one specific skin need. Find yours.</Text>
+          <Text color="gray.400" fontSize={{ base: "xs", md: "sm" }}>Each bar designed around one specific skin need. Find yours.</Text>
         </Container>
       </Box>
 
-      <Container maxW="1200px" pb={20}>
+      <Container maxW="1200px" pb={20} px={{ base: 3, md: 6 }}>
         {/* Filters */}
-        <Box bg="white" borderRadius="20px" p={5} mb={8} border="1px solid rgba(232,180,184,0.2)" shadow="sm">
-          <Flex gap={4} wrap={{ base: "wrap", md: "nowrap" }} align="center">
+        <Box bg="white" borderRadius={{ base: "16px", md: "20px" }} p={{ base: 3, md: 5 }} mb={{ base: 5, md: 8 }} border="1px solid rgba(232,180,184,0.2)" shadow="sm">
+          <Flex gap={3} direction={{ base: "column", sm: "row" }} align="stretch">
             <InputGroup flex={2}>
               <InputLeftElement pointerEvents="none">
-                <Text color="gray.300">🔍</Text>
+                <Text color="gray.300" fontSize="sm">🔍</Text>
               </InputLeftElement>
               <Input
                 placeholder="Search soaps..."
@@ -80,34 +80,39 @@ const ShopPage = () => {
                 bg="rgba(232,180,184,0.04)"
                 _focus={{ borderColor: "var(--pink)", bg: "white" }}
                 pl={10}
+                fontSize={{ base: "15px", md: "14px" }}
               />
             </InputGroup>
-            <Select
-              flex={1}
-              borderRadius="full"
-              border="1.5px solid rgba(232,180,184,0.3)"
-              bg="white"
-              _focus={{ borderColor: "var(--pink)" }}
-              value={selectedCategory}
-              onChange={e => setSelectedCategory(e.target.value)}
-            >
-              <option value="">All Categories</option>
-              {categories.map(c => <option key={c._id} value={c.slug}>{c.name}</option>)}
-            </Select>
-            <Select
-              flex={1}
-              borderRadius="full"
-              border="1.5px solid rgba(232,180,184,0.3)"
-              bg="white"
-              _focus={{ borderColor: "var(--pink)" }}
-              value={sortBy}
-              onChange={e => setSortBy(e.target.value)}
-            >
-              <option value="newest">Newest First</option>
-              <option value="price-low">Price: Low → High</option>
-              <option value="price-high">Price: High → Low</option>
-              <option value="rating">Top Rated</option>
-            </Select>
+            <Flex gap={3} flex={2}>
+              <Select
+                flex={1}
+                borderRadius="full"
+                border="1.5px solid rgba(232,180,184,0.3)"
+                bg="white"
+                _focus={{ borderColor: "var(--pink)" }}
+                value={selectedCategory}
+                onChange={e => setSelectedCategory(e.target.value)}
+                fontSize={{ base: "14px", md: "14px" }}
+              >
+                <option value="">All Categories</option>
+                {categories.map(c => <option key={c._id} value={c.slug}>{c.name}</option>)}
+              </Select>
+              <Select
+                flex={1}
+                borderRadius="full"
+                border="1.5px solid rgba(232,180,184,0.3)"
+                bg="white"
+                _focus={{ borderColor: "var(--pink)" }}
+                value={sortBy}
+                onChange={e => setSortBy(e.target.value)}
+                fontSize={{ base: "14px", md: "14px" }}
+              >
+                <option value="newest">Newest First</option>
+                <option value="price-low">Price: Low → High</option>
+                <option value="price-high">Price: High → Low</option>
+                <option value="rating">Top Rated</option>
+              </Select>
+            </Flex>
           </Flex>
         </Box>
 
@@ -117,15 +122,15 @@ const ShopPage = () => {
         ) : filtered.length === 0 ? (
           <Center py={20} flexDir="column" gap={4}>
             <Text fontSize="4xl">🧼</Text>
-            <Text fontFamily="'Playfair Display', serif" fontSize="xl">No soaps found</Text>
+            <Text fontFamily="'Playfair Display', serif" fontSize={{ base: "lg", md: "xl" }}>No soaps found</Text>
             <Button onClick={() => { setSearch(""); setSelectedCategory(""); }} variant="outline" borderRadius="full" borderColor="var(--pink)" color="var(--pink-dark)">
               Clear Filters
             </Button>
           </Center>
         ) : (
           <>
-            <Text fontSize="sm" color="gray.400" mb={6}>{filtered.length} soap{filtered.length !== 1 ? "s" : ""} found</Text>
-            <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} spacing={6}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color="gray.400" mb={{ base: 4, md: 6 }}>{filtered.length} soap{filtered.length !== 1 ? "s" : ""} found</Text>
+            <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} spacing={{ base: 4, md: 6 }}>
               {filtered.map(soap => <ShopCard key={soap._id} soap={soap} dispatch={dispatch} toast={toast} />)}
             </SimpleGrid>
           </>
